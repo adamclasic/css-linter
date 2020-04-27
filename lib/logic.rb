@@ -140,9 +140,9 @@ module Logic
   end
 end
 
-include Logic
-file = Buffer.new('./style.css')
-trailing_space(file.read_file)
+# include Logic
+# file = Buffer.new('./style.css')
+# trailing_space(file.read_file)
 
 # trailing_space([StringScanner.new('background-color: red;'), StringScanner.new('    background-color: red;'), StringScanner.new('p {'), StringScanner.new('p { ')])
 # check_indentation_selector([StringScanner.new('background-color: red;'), StringScanner.new('    background-color: red;'), StringScanner.new('  p {'), StringScanner.new('p { ')])
