@@ -83,14 +83,10 @@ module Logic
   end
 
   def check_newline_after_char(val, i, char, type)
-    if true #val.exist? /#{char}/
-      val.reset
-      val.skip_until(/#{char}/)
-      # val.scan(/./)
-      # p val
-      # test = val.scan(/.+/)
-      # p test
-      unless val.eos? #test != nil
+    val.reset
+    if val.exist?(Regexp.new(char))
+      val.skip_until(Regexp.new(char))
+      unless val.eos?
         err_printer(i+1, type, char[-1])
       end
     end
@@ -104,8 +100,9 @@ module Logic
       check_ifno_space_befor_char(val, i, '\;', 7)
       check_ifno_space_befor_char(val, i, '\;', 7)
       check_ifno_space_befor_char(val, i, '\}', 7)
-      check_newline_after_char(val, i, '\{', 4)
-      check_newline_after_char(val, i, '\;', 4)
+      check_newline_after_char(val, i, '{', 4)
+      check_newline_after_char(val, i, '}', 4)
+      check_newline_after_char(val, i, ';', 4)
     end
   end
   
@@ -144,10 +141,10 @@ end
 
 include Logic
 
-trailing_space([StringScanner.new('background-color: red;'), StringScanner.new('    background-color: red;'), StringScanner.new('p {'), StringScanner.new('p { ')])
-check_indentation_selector([StringScanner.new('background-color: red;'), StringScanner.new('    background-color: red;'), StringScanner.new('  p {'), StringScanner.new('p { ')])
-check_indentation_declaration([StringScanner.new('background-color: red;'), StringScanner.new('    background-color: red;'), StringScanner.new('p {'), StringScanner.new('p { ')])
-p 'time'
-space_checker([StringScanner.new('body {'), StringScanner.new('  background-color: green; 1'), StringScanner.new('}')])
-p '2 time'
-check_blanc_line([StringScanner.new('body {'), StringScanner.new('  background-color: green;'), StringScanner.new('}'), StringScanner.new('p')])
+# trailing_space([StringScanner.new('background-color: red;'), StringScanner.new('    background-color: red;'), StringScanner.new('p {'), StringScanner.new('p { ')])
+# check_indentation_selector([StringScanner.new('background-color: red;'), StringScanner.new('    background-color: red;'), StringScanner.new('  p {'), StringScanner.new('p { ')])
+# check_indentation_declaration([StringScanner.new('background-color: red;'), StringScanner.new('    background-color: red;'), StringScanner.new('p {'), StringScanner.new('p { ')])
+# p 'time'
+# space_checker([StringScanner.new('body { }'), StringScanner.new('  background-color: green; 1'), StringScanner.new('}')])
+# p '2 time'
+# check_blanc_line([StringScanner.new('body {'), StringScanner.new('  background-color: green;'), StringScanner.new('}'), StringScanner.new('')])
