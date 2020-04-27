@@ -10,7 +10,7 @@ class Buffer
     File.open(@file_path, 'r') { |line| content_arr = line.readlines.map(&:chomp) }
     @content_arr = content_arr.map { |val| val = StringScanner.new(val)}
   end
-  attr_reader :content_s
+  attr_reader :content_arr
 end
 
 code = Buffer.new('test.txt')

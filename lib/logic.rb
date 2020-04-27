@@ -82,6 +82,21 @@ module Logic
     end
   end
 
+  def check_newline_after_char(val, i, char, type)
+    if true #val.exist? /#{char}/
+      val.reset
+      val.skip_until(/#{char}/)
+      # val.scan(/./)
+      # p val
+      # test = val.scan(/.+/)
+      # p test
+      unless val.eos? #test != nil
+        err_printer(i+1, type, char[-1])
+      end
+    end
+  end
+
+
   def space_checker(content_arr)
     content_arr.each_with_index do |val, i|
       check_space_after_char(val, i, '\:', 2)
@@ -89,6 +104,8 @@ module Logic
       check_ifno_space_befor_char(val, i, '\;', 7)
       check_ifno_space_befor_char(val, i, '\;', 7)
       check_ifno_space_befor_char(val, i, '\}', 7)
+      check_newline_after_char(val, i, '\{', 4)
+      check_newline_after_char(val, i, '\;', 4)
     end
   end
   
@@ -96,14 +113,14 @@ module Logic
     content_arr_s = []
     content_arr.each { |val| content_arr_s << val.string }
     content_arr_s.each_with_index { |val, i|
-      if val == '' && content_arr_s[i-1].split('').include?(})
-        err_printer(i, 4, '}')
+      if content_arr_s[i].split('').include?('}') && content_arr_s[i+1] != ''
+        err_printer(i, 5, '}')
       end
     }
   end
 
-  def err_printer(line, type, char)
 
+  def err_printer(line, type, char)
     case type
     when 1
       puts "Error: line #{line}, Wrong Indentation, expected 2 spaces."
@@ -122,10 +139,7 @@ module Logic
     when 7
       puts "Error: line #{line}, Spacing, unexpected space before #{char}"
     end
-
   end
-
-
 end
 
 include Logic
@@ -134,5 +148,6 @@ trailing_space([StringScanner.new('background-color: red;'), StringScanner.new('
 check_indentation_selector([StringScanner.new('background-color: red;'), StringScanner.new('    background-color: red;'), StringScanner.new('  p {'), StringScanner.new('p { ')])
 check_indentation_declaration([StringScanner.new('background-color: red;'), StringScanner.new('    background-color: red;'), StringScanner.new('p {'), StringScanner.new('p { ')])
 p 'time'
-space_checker([StringScanner.new('body {'), StringScanner.new('  background-color: green;'), StringScanner.new('}')])
-check_blanc_line([StringScanner.new('body {'), StringScanner.new('  background-color: green;'), StringScanner.new('}')])
+space_checker([StringScanner.new('body {'), StringScanner.new('  background-color: green; 1'), StringScanner.new('}')])
+p '2 time'
+check_blanc_line([StringScanner.new('body {'), StringScanner.new('  background-color: green;'), StringScanner.new('}'), StringScanner.new('p')])
