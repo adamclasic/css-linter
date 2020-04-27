@@ -1,6 +1,5 @@
 require 'strscan'
 class Buffer
-
   def initialize(file_path)
     @file_path = file_path
   end
@@ -8,10 +7,7 @@ class Buffer
   def read_file
     content_arr = []
     File.open(@file_path, 'r') { |line| content_arr = line.readlines.map(&:chomp) }
-    @content_arr = content_arr.map { |val| val = StringScanner.new(val)}
+    @content_arr = content_arr.map { |val| val = StringScanner.new(val) }
   end
   attr_reader :content_arr
 end
-# puts Dir.pwd
-# code = Buffer.new('style.css')
-# p code.read_file
