@@ -12,6 +12,6 @@ class Buffer
   end
   attr_reader :content_arr
 end
-
-code = Buffer.new('test.txt')
-p code.read_file
+# puts Dir.pwd
+# code = Buffer.new('style.css')
+# p code.read_file
