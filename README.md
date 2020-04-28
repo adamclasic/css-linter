@@ -44,7 +44,7 @@
 ## Table of Contents
 
 * [About the Project](#about-the-project)
-  * [Built With](#built-with)
+* [Built With](#built-with)
 * [Instructions](#instructions)
 * [Video Presentation](#video-presentation)
 * [Contributors](#contributors)
@@ -161,33 +161,7 @@ To test out **CSS Linter** you need to:
 ```
 $ bin/main path_to_file.css (path_to_file being the file you want to check for linters)
 ```
-Error: line 4, Line Format, Expected one empty line after }
-Error: line 7, Line Format, Expected one empty line after }
-Error: line 10, Line Format, Expected one empty line after }
-Error: line 18, Line Format, Expected one empty line after }
-Error: line 21, Line Format, Expected one empty line after }
-Error: line 24, Line Format, Expected one empty line after }
-Error: line 32, Line Format, Expected one empty line after }
-Error: line 35, Line Format, Expected one empty line after }
-Error: line 38, Line Format, Expected one empty line after }
-Error: line 46, Line Format, Expected one empty line after }
-Error: line 49, Line Format, Expected one empty line after }
-Error: line 52, Line Format, Expected one empty line after }
-Error: line 60, Line Format, Expected one empty line after }
-Error: line 63, Line Format, Expected one empty line after }
-Error: line 66, Line Format, Expected one empty line after }
-Error: line 74, Line Format, Expected one empty line after }
-Error: line 77, Line Format, Expected one empty line after }
-Error: line 80, Line Format, Expected one empty line after }
-Error: line 88, Line Format, Expected one empty line after }
-Error: line 91, Line Format, Expected one empty line after }
-Error: line 94, Line Format, Expected one empty line after }
-Error: line 102, Line Format, Expected one empty line after }
-Error: line 105, Line Format, Expected one empty line after }
-Error: line 108, Line Format, Expected one empty line after }
-Error: line 116, Line Format, Expected one empty line after }
-Error: line 119, Line Format, Expected one empty line after }
-Error: line 122, Line Format, Expected one empty line after }
+![Screenshot](images/check.png)
 
 
 ### Built With
@@ -199,9 +173,9 @@ This project was built using these technologies.
 <!-- CONTACT -->
 ## Contributors
 
-👤 **Adam Allalou**
+👤 **Abderrahman Adam Allalou**
 
-- LinkedIn: [Abderrahmane Adam Allalou](https://www.linkedin.com/in/alexandru-bangau/)
+- LinkedIn: [Abderrahmane Adam Allalou](https://www.linkedin.com/in/abderrahmane-allalou/)
 - GitHub: [@adamclasic](https://github.com/adamclasic)
 - tweeter: [@adamallalou](https://twitter.com/adamallalou)
 
