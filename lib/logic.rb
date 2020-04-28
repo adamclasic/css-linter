@@ -6,10 +6,7 @@ module Logic
     content_arr.each_with_index do |val, i|
       test = val.scan_until(/:/)
       val.reset
-      # p val.bol?
-      if test && val.scan(/\s+/) != '  '
-        err_printer(i + 1, 1, nil)
-      end
+      err_printer(i + 1, 1, nil) if test && val.scan(/\s+/) != '  '
     end
   end
 
@@ -17,19 +14,14 @@ module Logic
     content_arr.each_with_index do |val, i|
       test = val.scan_until(/{/)
       val.reset
-      # p val.bol?
-      if test && val.scan(/\s+/) != nil
-        err_printer(i + 1, 8, nil)
-      end
+      err_printer(i + 1, 8, nil) if test && !val.scan(/\s+/).nil?
     end
   end
 
   def trailing_space(content_arr)
     content_arr.each_with_index do |val, i|
       test = val.string.split('')[-1]
-      if test == ' '
-        err_printer(i + 1, 6, nil)
-      end
+      err_printer(i + 1, 6, nil) if test == ' '
     end
   end
 
@@ -38,9 +30,7 @@ module Logic
       val.reset
       val.skip_until(/#{char}/)
       test = val.scan(/\s+/)
-      if test != ' '
-        err_printer(i + 1, type, char[-1])
-      end
+      err_printer(i + 1, type, char[-1]) if test != ' '
     end
   end
 
@@ -52,9 +42,7 @@ module Logic
       test = StringScanner.new(test)
       test.scan /./
       test = test.scan(/\s+/)
-      if test != ' '
-        err_printer(i + 1, type, char[-1])
-      end
+      err_printer(i + 1, type, char[-1]) if test != ' '
     end
   end
 
@@ -63,9 +51,7 @@ module Logic
       val.reset
       val.skip_until(/#{char}/)
       test = val.scan(/\s+/)
-      if test == ' '
-        err_printer(i + 1, type, char[-1])
-      end
+      err_printer(i + 1, type, char[-1]) if test == ' '
     end
   end
 
@@ -74,19 +60,16 @@ module Logic
       val.reset
       test = val.scan_until(/#{char}/)
       test = test.split('')[-2]
-      if test == ' '
-        err_printer(i + 1, type, char[-1])
-      end
+      err_printer(i + 1, type, char[-1]) if test == ' '
     end
   end
 
   def check_newline_after_char(val, i, char, type)
     val.reset
     if val.exist?(Regexp.new(char))
-      val.skip_until(Regexp.new(char))
-      unless val.eos?
-        err_printer(i + 1, type, char[-1])
-      end
+      val.reset
+      val.scan_until(Regexp.new(char))
+      err_printer(i + 1, type, char[-1]) if !val.eos?
     end
   end
 
@@ -97,20 +80,23 @@ module Logic
       check_ifno_space_befor_char(val, i, '\;', 7)
       check_ifno_space_befor_char(val, i, '\;', 7)
       check_ifno_space_befor_char(val, i, '\}', 7)
-      check_newline_after_char(val, i, '{', 4)
-      check_newline_after_char(val, i, '}', 4)
-      check_newline_after_char(val, i, ';', 4)
+      if content_arr[i+1] != nil
+        content_arr[i+1].reset
+        content_arr[i].reset
+        err_printer(i + 1, 5, '}') if content_arr[i+1].string != '' && content_arr[i].exist?(/\}/)
+      end
+      check_newline_after_char(val, i, '\}', 5) 
+      check_newline_after_char(val, i, '\;', 5)
+      check_newline_after_char(val, i, '\{', 5)
     end
   end
 
   def check_blanc_line(content_arr)
     content_arr_s = []
     content_arr.each { |val| content_arr_s << val.string }
-    content_arr_s.each_with_index { |val, i|
-      if content_arr_s[i].split('').include?('}') && content_arr_s[i + 1] != ''
-        err_printer(i, 5, '}')
-      end
-    }
+    content_arr_s.each_with_index do |_val, i|
+      err_printer(i, 5, '}') if content_arr_s[i].split('').include?('}') && content_arr_s[i + 1] != ''
+    end
   end
 
   def err_printer(line, type, char)
