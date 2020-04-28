@@ -1,3 +1,4 @@
+# rubocop: disable Lint/UselessAssignment
 require 'strscan'
 class Buffer
   def initialize(file_path)
@@ -11,3 +12,4 @@ class Buffer
   end
   attr_reader :content_arr
 end
+# rubocop: enable Lint/UselessAssignment

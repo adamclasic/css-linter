@@ -1,101 +1,101 @@
 require 'strscan'
 require_relative 'buffer.rb'
-
+# rubocop: disable Metrics/ModuleLength, Style/GuardClause, Metrics/CyclomaticComplexity
 module Logic
   def check_indentation_declaration(content_arr)
-    content_arr.each_with_index do |val, i|
+    content_arr.each_with_index do |val, iii|
       test = val.scan_until(/:/)
       val.reset
-      err_printer(i + 1, 1, nil) if test && val.scan(/\s+/) != '  '
+      err_printer(iii + 1, 1, nil) if test && val.scan(/\s+/) != '  '
     end
   end
 
   def check_indentation_selector(content_arr)
-    content_arr.each_with_index do |val, i|
+    content_arr.each_with_index do |val, iii|
       test = val.scan_until(/{/)
       val.reset
-      err_printer(i + 1, 8, nil) if test && !val.scan(/\s+/).nil?
+      err_printer(iii + 1, 8, nil) if test && !val.scan(/\s+/).nil?
     end
   end
 
   def trailing_space(content_arr)
-    content_arr.each_with_index do |val, i|
+    content_arr.each_with_index do |val, iii|
       test = val.string.split('')[-1]
-      err_printer(i + 1, 6, nil) if test == ' '
+      err_printer(iii + 1, 6, nil) if test == ' '
     end
   end
 
-  def check_space_after_char(val, i, char, type)
-    if val.exist? /#{char}/
+  def check_space_after_char(val, iii, char, type)
+    if val.exist?(/#{char}/)
       val.reset
       val.skip_until(/#{char}/)
       test = val.scan(/\s+/)
-      err_printer(i + 1, type, char[-1]) if test != ' '
+      err_printer(iii + 1, type, char[-1]) if test != ' '
     end
   end
 
-  def check_space_befor_char(val, i, char, type)
-    if val.exist? /#{char}/
+  def check_space_befor_char(val, iii, char, type)
+    if val.exist?(/#{char}/)
       val.reset
       test = val.scan_until(/#{char}/)
       test = test.split('').reverse.join('')
       test = StringScanner.new(test)
-      test.scan /./
+      test.scan(/./)
       test = test.scan(/\s+/)
-      err_printer(i + 1, type, char[-1]) if test != ' '
+      err_printer(iii + 1, type, char[-1]) if test != ' '
     end
   end
 
-  def check_ifno_space_after_char(val, i, char, type)
-    if val.exist? /#{char}/
+  def check_ifno_space_after_char(val, iii, char, type)
+    if val.exist?(/#{char}/)
       val.reset
       val.skip_until(/#{char}/)
       test = val.scan(/\s+/)
-      err_printer(i + 1, type, char[-1]) if test == ' '
+      err_printer(iii + 1, type, char[-1]) if test == ' '
     end
   end
 
-  def check_ifno_space_befor_char(val, i, char, type)
-    if val.exist? /#{char}/
+  def check_ifno_space_befor_char(val, iii, char, type)
+    if val.exist?(/#{char}/)
       val.reset
       test = val.scan_until(/#{char}/)
       test = test.split('')[-2]
-      err_printer(i + 1, type, char[-1]) if test == ' '
+      err_printer(iii + 1, type, char[-1]) if test == ' '
     end
   end
 
-  def check_newline_after_char(val, i, char, type)
+  def check_newline_after_char(val, iii, char, type)
     val.reset
     if val.exist?(Regexp.new(char))
       val.reset
       val.scan_until(Regexp.new(char))
-      err_printer(i + 1, type, char[-1]) if !val.eos?
+      err_printer(iii + 1, type, char[-1]) unless val.eos?
     end
   end
 
   def space_checker(content_arr)
-    content_arr.each_with_index do |val, i|
-      check_space_after_char(val, i, '\:', 2)
-      check_space_befor_char(val, i, '\{', 3)
-      check_ifno_space_befor_char(val, i, '\;', 7)
-      check_ifno_space_befor_char(val, i, '\;', 7)
-      check_ifno_space_befor_char(val, i, '\}', 7)
-      if content_arr[i+1] != nil
-        content_arr[i+1].reset
-        content_arr[i].reset
-        err_printer(i + 1, 5, '}') if content_arr[i+1].string != '' && content_arr[i].exist?(/\}/)
+    content_arr.each_with_index do |val, iii|
+      check_space_after_char(val, iii, '\:', 2)
+      check_space_befor_char(val, iii, '\{', 3)
+      check_ifno_space_befor_char(val, iii, '\;', 7)
+      check_ifno_space_befor_char(val, iii, '\;', 7)
+      check_ifno_space_befor_char(val, iii, '\}', 7)
+      unless content_arr[iii + 1].nil?
+        content_arr[iii + 1].reset
+        content_arr[iii].reset
+        err_printer(iii + 1, 5, '}') if content_arr[iii + 1].string != '' && content_arr[iii].exist?(/\}/)
       end
-      check_newline_after_char(val, i, '\}', 5) 
-      check_newline_after_char(val, i, '\;', 5)
-      check_newline_after_char(val, i, '\{', 5)
+      check_newline_after_char(val, iii, '\}', 5)
+      check_newline_after_char(val, iii, '\;', 5)
+      check_newline_after_char(val, iii, '\{', 5)
     end
   end
 
   def check_blanc_line(content_arr)
     content_arr_s = []
     content_arr.each { |val| content_arr_s << val.string }
-    content_arr_s.each_with_index do |_val, i|
-      err_printer(i, 5, '}') if content_arr_s[i].split('').include?('}') && content_arr_s[i + 1] != ''
+    content_arr_s.each_with_index do |_val, iii|
+      err_printer(iii, 5, '}') if content_arr_s[iii].split('').include?('}') && content_arr_s[iii + 1] != ''
     end
   end
 
@@ -120,3 +120,4 @@ module Logic
     end
   end
 end
+# rubocop: enable Metrics/ModuleLength, Style/GuardClause, Metrics/CyclomaticComplexity
