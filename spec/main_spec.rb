@@ -29,6 +29,13 @@ describe "Logic" do
     end
   end
 
-
+  describe '#check_trailing_space' do
+    it 'check if the indentation of selector is 0 spaces' do
+      content = Buffer.new(file_path)
+      expect do
+        trailing_space(content.read_file)
+      end.to output("Error: line 2, Spacing, Trailing space detected.\n").to_stdout
+    end
+  end
   
 end
