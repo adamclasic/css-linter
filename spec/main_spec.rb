@@ -1,13 +1,20 @@
-
 require_relative '../lib/buffer.rb'
 require_relative '../lib/logic.rb'
 require_relative './spec_helper.rb'
 # require 'strscan'
 
-describe "Logic" do
+describe 'Logic' do
   include Logic
 
-  let(:file_path) {'style.css'}
+  let(:file_path) { 'style.css' }
+
+  describe '#check_buffer' do
+    it 'check if Buffer#file_name return a StringScanner instance' do
+      content = Buffer.new(file_path)
+      # specify {content.should (StringScanner)}
+      expect(content.read_file.first).to be_a(StringScanner)
+    end
+  end
 
   describe '#check_indentation_declaration' do
     it 'check if the indentation of declaration is 2 spaces' do
@@ -16,9 +23,7 @@ describe "Logic" do
         check_indentation_declaration(content.read_file)
       end.to output("Error: line 2, Wrong Indentation, expected 2 spaces.\n").to_stdout
     end
-
   end
-
 
   describe '#check_indentation_selctor' do
     it 'check if the indentation of selector is 0 spaces' do
@@ -46,12 +51,4 @@ describe "Logic" do
       end.to output("Error: line 3, Line Format, Expected one empty line after }\n").to_stdout
     end
   end
-  
 end
-
-# Error: line 2, Line Format, Expected one empty line after ;\n" to stdout, but output "
-# Error: line 2, Line Format, Expected one empty line after ;\n
-# Error: line 1, Line Format, Expected one empty line after ;\n" to stdout, but output "
-# Error: line 1, Line Format, Expected one empty line after {\n
-# Error: line 1, Line Format, Expected one empty line after {\n" to stdout, but output "
-# Error: line 1, Line Format, Expected one empty line after {\n
