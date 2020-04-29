@@ -1,7 +1,6 @@
 require_relative '../lib/buffer.rb'
 require_relative '../lib/logic.rb'
 require_relative './spec_helper.rb'
-# require 'strscan'
 
 describe 'Logic' do
   include Logic
@@ -9,9 +8,8 @@ describe 'Logic' do
   let(:file_path) { 'style.css' }
 
   describe '#check_buffer' do
-    it 'check if Buffer#file_name return a StringScanner instance' do
+    it 'check if Buffer#file_name return an instance of StringScanner ' do
       content = Buffer.new(file_path)
-      # specify {content.should (StringScanner)}
       expect(content.read_file.first).to be_a(StringScanner)
     end
   end

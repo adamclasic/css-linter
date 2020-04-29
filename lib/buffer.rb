@@ -1,8 +1,10 @@
 # rubocop: disable Lint/UselessAssignment
 require 'strscan'
 class Buffer
+  attr_reader :content_arr
   def initialize(file_path)
     @file_path = file_path
+    @content_arr = []
   end
 
   def read_file
@@ -10,6 +12,5 @@ class Buffer
     File.open(@file_path, 'r') { |line| content_arr = line.readlines.map(&:chomp) }
     @content_arr = content_arr.map { |val| val = StringScanner.new(val) }
   end
-  attr_reader :content_arr
 end
 # rubocop: enable Lint/UselessAssignment
