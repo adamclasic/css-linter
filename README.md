@@ -163,12 +163,18 @@ $ bin/main path_to_file.css (path_to_file being the file you want to check for l
 ```
 ![Screenshot](images/check.png)
 
+**Rspec testing**
+* Run the command and see the output
+```
+$ rspec
+```
 
 ### Built With
 This project was built using these technologies.
 * Ruby
 * Rubocop
 * VsCode
+* Rspec
 
 <!-- CONTACT -->
 ## Contributors
