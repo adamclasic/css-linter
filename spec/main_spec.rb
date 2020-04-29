@@ -30,12 +30,28 @@ describe "Logic" do
   end
 
   describe '#check_trailing_space' do
-    it 'check if the indentation of selector is 0 spaces' do
+    it 'check if there is a trailing space' do
       content = Buffer.new(file_path)
       expect do
         trailing_space(content.read_file)
-      end.to output("Error: line 2, Spacing, Trailing space detected.\n").to_stdout
+      end.to output("Error: line 4, Spacing, Trailing space detected.\n").to_stdout
+    end
+  end
+
+  describe '#check_space_checker' do
+    it 'check space according to the given charecter' do
+      content = Buffer.new(file_path)
+      expect do
+        space_checker(content.read_file)
+      end.to output("Error: line 3, Line Format, Expected one empty line after }\n").to_stdout
     end
   end
   
 end
+
+# Error: line 2, Line Format, Expected one empty line after ;\n" to stdout, but output "
+# Error: line 2, Line Format, Expected one empty line after ;\n
+# Error: line 1, Line Format, Expected one empty line after ;\n" to stdout, but output "
+# Error: line 1, Line Format, Expected one empty line after {\n
+# Error: line 1, Line Format, Expected one empty line after {\n" to stdout, but output "
+# Error: line 1, Line Format, Expected one empty line after {\n
