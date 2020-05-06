@@ -1,0 +1,2 @@
+gem 'strscan'
+gem 'rspec'
